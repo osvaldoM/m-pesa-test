@@ -1,5 +1,10 @@
 const axios= require('axios'),
-express = require('express');
+express = require('express'),
+mongojs = require('mongojs');
+
+
+const connectionString='mongodb://127.0.0.1/transactions';
+const db = mongojs(connectionString,["myTransations"]);
 
 const port = 5000;
 
@@ -10,13 +15,26 @@ app.listen(port, function () {
   });
 
   
-app.get('/', (req, res) => res.send('Hello World!'));
+app.get('/', (req, res) => {
+    // find everything
+    db.myTransations.find(function (err, docs) {
+    // docs is an array of all the documents in mycollection
+    if(err){
+        res.send(docs);        
+    }
+    res.send(docs);
+    })
 
-axios.post('http://10.201.239.73:18346/ipg/c2bpayment/',
+});
+
+app.get('/pay/:amount',(req,res)=>{
+    amount =req.params.amount;
+
+    axios.post('http://10.201.239.73:18346/ipg/c2bpayment/',
 {
     "input_ServiceProviderCode": "110368",
     "input_CustomerMSISDN": "258843747849",
-    "input_Amount": "10",
+    "input_Amount": amount,
     "input_TransactionReference": "T12344C",
     "input_ThirdPartyReference": "c7e156a6-d339-27f1-7ece-c61566de799a"
 },
@@ -27,8 +45,16 @@ axios.post('http://10.201.239.73:18346/ipg/c2bpayment/',
     }
   })
   .then(function (response) {
-    console.log(response.status);
+      db.myTransations.insert(response.data,(err,doc)=>{
+          if(err){
+            res.send(err+'error');                  
+          }
+        res.send(doc);    
+      })
+      console.log(response.data);      
   })
   .catch(function (error) {
-    console.log(error);
+    res.send(error.data);
   });
+
+});
