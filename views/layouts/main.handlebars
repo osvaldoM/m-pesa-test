@@ -20,17 +20,28 @@ tr:nth-child(even) {
     background-color: #dddddd;
 }
 </style>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script>
-        $(function(){
-            $('.reverse').on('click',function(){
+
+<script>
+    
+let $= document.querySelector;
+
+window.addEventListener('load',function(){
+            $('.reverse').addEventListener('click',function(){
                 $row = $(this).closest('tr');
                 id=$('.id',$row).html();
-                $.ajax('http://localhost:5000/reversal/'+id,{
-                    type:'post'
+                window.fetch('http://localhost:5000/reversal/'+id,{
+                    method:'post'
                 })
+                .then(function(res){ alert('successful payment')});
+                .error(console.log('error submitting form'))
+            });
+            $('form').addEventListener('submit',function(e){
+                e.preventDefault();
+                let amount = $('#amount'),
+                    number = $('#number');
+
             })
-        })
+        });
     </script>
 </head>
 <body>
