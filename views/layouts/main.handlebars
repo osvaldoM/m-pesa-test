@@ -1,55 +1,72 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="utf-8">
     <title>{{title}}</title>
     <style>
-table {
-    font-family: arial, sans-serif;
-    border-collapse: collapse;
-    width: 100%;
-}
+        table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
 
-td, th {
-    border: 1px solid #dddddd;
-    text-align: left;
-    padding: 8px;
-}
+        td,
+        th {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
 
-tr:nth-child(even) {
-    background-color: #dddddd;
-}
-</style>
+        tr:nth-child(even) {
+            background-color: #dddddd;
+        }
+    </style>
 
-<script>
-    
-let $= document.querySelector;
-
-window.addEventListener('load',function(){
-            $('.reverse').addEventListener('click',function(){
-                $row = $(this).closest('tr');
-                id=$('.id',$row).html();
-                window.fetch('http://localhost:5000/reversal/'+id,{
-                    method:'post'
-                })
-                .then(function(res){ alert('successful payment')});
-                .error(console.log('error submitting form'))
+    <script>
+        window.addEventListener('load', function () {
+            let reverseButtons = document.querySelectorAll('.reverse');
+            reverseButtons.forEach(element => {
+                element.addEventListener('click', (event) => {
+                    id = event.target.closest('tr').querySelector('.id').innerHTML;
+                    window.fetch('http://localhost:5000/reversal/' + id, {
+                        method: 'post'
+                    })
+                        .then(res => {
+                            if (!res.ok) {
+                                throw Error(res.statusText);
+                            }
+                            return res;
+                        })
+                        .then(function (res) { alert('successful payment') })
+                        .catch(console.log('error submitting form'));
+                });
             });
-            $('form').addEventListener('submit',function(e){
-                e.preventDefault();
-                let amount = $('#amount'),
-                    number = $('#number');
+            document.querySelector('form').addEventListener('submit', (event) => {
+                event.preventDefault();
+                let amount = document.querySelector('#amount').value;
+                window.fetch('http://localhost:5000/' + amount, {
+                    method: 'post'
+                })
+                    .then(res => {
+                        if (!res.ok) {
+                            throw Error(response.statusText);
+                        }
+                        return response;
+                    })
+                    .then((res) => { console.log('successful payment'); })
+                    .catch((err) => { console.log('error submitting form') + err; });
 
             })
+
         });
     </script>
 </head>
+
 <body>
 
     {{{body}}}
 
 </body>
-<script>
 
-</script>
 </html>

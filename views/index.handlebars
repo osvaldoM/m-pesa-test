@@ -7,7 +7,6 @@
     <th>transaction refference</th>
     <td>output_ResponseDesc</td>
     <td>output_TransactionID</td>
-    <td>output_TransactionID</td>
     <td>input_CustomerMSISDN</td>
     <td>input_ThirdPartyReference</td>
     <th>check status</th>
@@ -22,7 +21,6 @@
     <td class='refference'>{{input_TransactionReference}}</td>
     <td>{{output_ResponseDesc}}</td>
     <td>{{output_TransactionID}}</td>
-    <td>{{output_TransactionID}}</td>
     <td>{{input_CustomerMSISDN}}</td>
     <td>{{input_ThirdPartyReference}}</td>
     <td> <button class="status"> check status </button></td>
@@ -32,7 +30,8 @@
 </table>
 
 <div>
-  <input placeholder="number" value="843747849"/>
-  <input placeholder="amount" value="10"/>
-<button disabled="disabled"></button>
+  <form>
+  <input id="amount" placeholder="amount" value="10"/>
+  <button type="submit"> send</button>
+  </form>
 </div>
