@@ -34,7 +34,8 @@ app.get('/', (req, res) => {
     return res.render('index', { title: 'm-pesa test', transactions: mockData });
     db.myTransactions.find( (err, docs) => {
         if (err) {
-            res.send('error');
+            res.status(500).send('error reading from  db');
+            console.log(err);
         }
         res.render('index', { title: 'm-pesa test', transactions: docs });
     });
@@ -57,7 +58,8 @@ app.post('/:amount', (req, res) => {
         .then((response) => {
             db.myTransactions.insert(response.data, (err, doc) => {
                 if (err) {
-                    res.send(err + 'error');
+                    res.status(500).send('error saving in db');
+                    console.log(err);
                 }
                 res.send(response.data);
             });
@@ -80,8 +82,6 @@ app.post('/reversal/:transactionId', (req, res) => {
 });
 
 function reverseTransaction(doc, res) {
-    // res.send(doc); 
-    // return;   
     axios.post(reverseTransactionEndpoint,
         {
             "input_ServiceProviderCode": doc.input_ServiceProviderCode,
@@ -104,8 +104,6 @@ function reverseTransaction(doc, res) {
 };
 
 function getTransactionStatus(doc, res) {
-    // res.send(doc); 
-    // return;   
     axios.post('http://10.201.239.73:18348/ipg/reversal/',
         {
             "input_ServiceProviderCode": doc.input_ServiceProviderCode,
