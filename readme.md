@@ -6,9 +6,7 @@ This was written in about 6  hours and a few more of polishing afterwards so, it
 
 ## ATTENTION:
 
-- This is only for refference.  Don't expect it  to be functional so,except for the cases where mock data is used
-
-- Gateway is innacessible outside of vodacom's LAN 
+- This is only for refference. The Gateway for payments is innacessible outside of vodacom's LAN so the app shouldn't be functional unless vodacom opens it to public.
 
 - For any improvements/ questions/ recommendation, please create an issue or open a PR
 
