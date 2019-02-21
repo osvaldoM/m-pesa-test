@@ -2,7 +2,7 @@
 
 Demo app for prof of concept of future mpesa payments gateway API
 
-This was written in about 6  hours and a few more of polishing afterwards so, it follows a basic structure and should be of easy understanding
+This was written in about 6  hours during a testing session, so, it follows a basic structure and should be of easy understanding
 
 ## ATTENTION:
 
